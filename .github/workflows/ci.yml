@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  rust:
+    name: Rust CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Check formatting
+        run: cd backend && cargo fmt --check
+
+      - name: Run Clippy
+        run: cd backend && cargo clippy --all-targets -- -D warnings
+
+      - name: Run tests
+        run: cd backend && cargo test
+
+  flutter:
+    name: Flutter CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: cd app && flutter pub get
+
+      - name: Analyze code
+        run: cd app && flutter analyze
+
+      - name: Run tests
+        run: cd app && flutter test

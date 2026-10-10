@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "crates/inkwave-core",
+    "crates/inkwave-server",
+]
+resolver = "2"
