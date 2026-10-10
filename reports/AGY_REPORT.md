@@ -1,28 +1,25 @@
-# AGY REPORT: task-001
+# AGY REPORT: task-000
 Model used: Gemini 3.8 Flash
-Status: BLOCKED
+Status: PARTIAL
 ## What I did (bullets)
-- Completed PART A: Initialized `inkwave` git repo (branch main).
-- Created `docs/`, `tasks/`, `reports/`.
-- Copied `inkwave-project-overview.md` to `docs/`.
-- Created exact `README.md`, `AGENTS.md`, and `tasks/NEXT_TASK.md`.
-- Initialized `reports/AGY_REPORT.md` and committed `chore: bootstrap InkWave agent workflow`.
-- Checked tool availability for PART A Step 2.
+- VS Build Tools: Attempted winget install twice; failed with exit code 1602 (user canceled or rejected UAC prompt).
+- Rust: Installed via winget (Rustlang.Rustup 1.29.1). Set default to stable, added rustfmt and clippy. Confirmed `C:\Users\Aleron\.cargo\bin` in User PATH.
+- Flutter: Attempted `git clone https://github.com/flutter/flutter.git -b stable C:\src\flutter` twice. Both failed due to network reset (`curl 56 Recv failure: Connection was reset` from github.com).
 ## Files created/changed (paths only)
-- README.md
-- AGENTS.md
-- docs/inkwave-project-overview.md
-- tasks/NEXT_TASK.md
 - reports/AGY_REPORT.md
 ## Verification (command -> PASS/FAIL, last lines if FAIL)
-- git --version -> PASS (git version 2.55.0.windows.3)
-- gh --version -> PASS (gh version 2.102.0)
-- flutter --version -> FAIL (CommandNotFoundException: 'flutter' is not recognized)
-- rustc --version -> FAIL (CommandNotFoundException: 'rustc' is not recognized)
-- cargo --version -> FAIL (CommandNotFoundException: 'cargo' is not recognized)
+- rustc --version -> PASS (rustc 1.99.0 (b940084d7 2026-09-28))
+- cargo --version -> PASS (cargo 1.99.0 (5f94df478 2026-08-27))
+- cargo clippy --version -> PASS (clippy 0.1.99 (b940084d7e 2026-09-28))
+- rustfmt --version -> PASS (rustfmt 1.10.0-stable (b940084d7e 2026-09-28))
+- flutter --version -> FAIL (not installed, git clone failed)
+- flutter doctor -> FAIL (not installed)
+- VS Build Tools -> FAIL (winget exit code: 1602)
 ## Deviations from the task (and why)
-- Per instruction: "If Flutter or Rust is missing, STOP after Part A and report; do not try to install system toolchains." Stopped execution after Part A.
+- Retried VS Build Tools and Flutter clone once per retry rule; both failed and were not retried further.
 ## Blockers / questions for Claude
-- Both Flutter and Rust toolchains (flutter, rustc, cargo) are missing from PATH on the host machine. Cannot scaffold or verify Flutter project and Cargo workspace without them.
+- Flutter download from `github.com` failed with connection reset. Suggest using a mirror or zip archive, or set `PUB_HOSTED_URL` and `FLUTTER_STORAGE_BASE_URL` if behind a proxy/firewall.
+- VS Build Tools failed with 1602 (needs UAC approval to proceed).
 ## Suggested next step (1-2 lines)
-User needs to install or add Flutter and Rust (rustc/cargo) to the system PATH.
+Approve UAC for VS Build Tools installer, and provide a mirror/VPN/zip for Flutter SDK.
+NOTE: FULLY RESTART Antigravity so its terminal picks up the new PATH!
